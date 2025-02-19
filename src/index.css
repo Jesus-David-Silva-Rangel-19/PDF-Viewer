@@ -46,9 +46,23 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+/* PDF text layer styles */
+.react-pdf__Page__textContent {
+  @apply select-text;
+}
+
+.react-pdf__Page__textContent > span {
+  @apply opacity-100 text-black;
+}
+
+.react-pdf__Page__annotations.annotationLayer {
+  @apply pointer-events-none;
+}
+
 .pdf-container {
   @apply relative;
   min-height: 0;
+  touch-action: pan-x pan-y;
 }
 
 @keyframes slide-in-right {
@@ -76,5 +90,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .pdf-container {
+    @apply px-2;
+  }
+  
+  .page {
+    @apply mx-auto;
   }
 }
