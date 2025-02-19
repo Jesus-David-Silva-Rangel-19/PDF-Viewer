@@ -26,7 +26,7 @@ export const NotesPanel = ({ isOpen, setIsOpen }: NotesPanelProps) => {
   return (
     <div className="absolute right-0 top-14 bottom-0 w-80 bg-white border-l border-zinc-200 flex flex-col animate-slide-in-right">
       <div className="p-4 border-b border-zinc-200 flex items-center justify-between">
-        <h2 className="font-semibold text-zinc-800">Notes</h2>
+        <h2 className="font-semibold text-zinc-800">Notas</h2>
         <Button
           variant="ghost"
           size="icon"
@@ -54,10 +54,10 @@ export const NotesPanel = ({ isOpen, setIsOpen }: NotesPanelProps) => {
           <Input
             value={newNote}
             onChange={(e) => setNewNote(e.target.value)}
-            placeholder="Add a note..."
+            placeholder="Agregar una nota..."
             onKeyDown={(e) => e.key === "Enter" && addNote()}
           />
-          <Button onClick={addNote}>Add</Button>
+          <Button onClick={addNote}>Agregar</Button>
         </div>
       </div>
     </div>

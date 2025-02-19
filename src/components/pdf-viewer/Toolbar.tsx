@@ -86,8 +86,8 @@ export const Toolbar = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Print</DropdownMenuItem>
-            <DropdownMenuItem>Properties</DropdownMenuItem>
+            <DropdownMenuItem>Imprimir</DropdownMenuItem>
+            <DropdownMenuItem>Propiedades</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

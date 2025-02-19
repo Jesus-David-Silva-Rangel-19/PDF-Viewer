@@ -21,30 +21,30 @@ export const Sidebar = ({ pageNumber, numPages, setPageNumber }: SidebarProps) =
   return (
     <div className="w-64 border-r border-zinc-200 bg-white flex flex-col">
       <div className="p-4 border-b border-zinc-200">
-        <h1 className="text-xl font-semibold text-zinc-800">Document Title</h1>
+        <h1 className="text-xl font-semibold text-zinc-800">Título del documento</h1>
       </div>
 
       <div className="flex-1 flex flex-col">
         <div className="p-2 space-y-1">
           <Button variant="ghost" className="w-full justify-start gap-2">
             <BookOpen className="h-4 w-4" />
-            Overview
+            Resumen
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2">
             <Bookmark className="h-4 w-4" />
-            Bookmarks
+            Marcadores
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2">
             <Highlighter className="h-4 w-4" />
-            Highlights
+            Resaltados
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2">
             <Languages className="h-4 w-4" />
-            Translate
+            Traducir
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2">
             <Settings className="h-4 w-4" />
-            Settings
+            Ajustes
           </Button>
         </div>
 
@@ -60,7 +60,7 @@ export const Sidebar = ({ pageNumber, numPages, setPageNumber }: SidebarProps) =
                     : "text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
-                Page {page}
+                Página {page}
               </button>
             ))}
           </div>
