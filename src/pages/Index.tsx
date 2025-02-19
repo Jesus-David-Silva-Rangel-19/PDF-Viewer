@@ -20,6 +20,7 @@ const Index = () => {
   const { toast } = useToast();
   const [scale, setScale] = useState(1);
   const [pdfFile, setPdfFile] = useState<string | null>(null);
+  const [pageWidth, setPageWidth] = useState<number>(800);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -35,6 +36,7 @@ const Index = () => {
       const url = URL.createObjectURL(file);
       setPdfFile(url);
       setPageNumber(1);
+      setScale(1); // Reset zoom when loading new document
     }
   };
 
@@ -45,6 +47,21 @@ const Index = () => {
   const goToNextPage = () => {
     setPageNumber((prevPageNumber) => Math.min(prevPageNumber + 1, numPages));
   };
+
+  // Adjust page width based on container size
+  useEffect(() => {
+    const updatePageWidth = () => {
+      const container = document.querySelector('.pdf-container');
+      if (container) {
+        const width = container.clientWidth;
+        setPageWidth(Math.min(width - 100, 800)); // Max width of 800px, with 50px padding on each side
+      }
+    };
+
+    updatePageWidth();
+    window.addEventListener('resize', updatePageWidth);
+    return () => window.removeEventListener('resize', updatePageWidth);
+  }, []);
 
   return (
     <div className="flex h-screen bg-zinc-50">
@@ -58,7 +75,7 @@ const Index = () => {
           setIsNotesOpen={setIsNotesOpen}
         />
         
-        <div className="flex-1 relative overflow-hidden bg-zinc-100">
+        <div className="flex-1 relative overflow-hidden bg-zinc-100 pdf-container">
           {!pdfFile ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <label className="flex flex-col items-center gap-4 cursor-pointer">
@@ -77,24 +94,42 @@ const Index = () => {
               </label>
             </div>
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center overflow-auto">
               <TransformWrapper
                 initialScale={1}
                 minScale={0.5}
                 maxScale={3}
                 onZoom={(ref) => setScale(ref.state.scale)}
+                centerOnInit={true}
               >
-                <TransformComponent>
+                <TransformComponent
+                  wrapperClass="w-full h-full"
+                  contentClass="flex items-center justify-center p-8"
+                >
                   <Document
                     file={pdfFile}
                     onLoadSuccess={onDocumentLoadSuccess}
                     className="pdf-document"
+                    loading={
+                      <div className="flex items-center justify-center p-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-600"></div>
+                      </div>
+                    }
+                    error={
+                      <div className="text-red-500 text-center p-4">
+                        Error al cargar el PDF. Por favor, intente de nuevo.
+                      </div>
+                    }
                   >
                     <Page
                       pageNumber={pageNumber}
+                      width={pageWidth}
                       className="page"
                       renderTextLayer={true}
                       renderAnnotationLayer={true}
+                      loading={
+                        <div className="animate-pulse bg-zinc-200 rounded-lg" style={{ width: pageWidth, height: pageWidth * 1.414 }} />
+                      }
                     />
                   </Document>
                 </TransformComponent>
