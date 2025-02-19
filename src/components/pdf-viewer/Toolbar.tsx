@@ -29,13 +29,23 @@ export const Toolbar = ({
   isNotesOpen,
   setIsNotesOpen,
 }: ToolbarProps) => {
+  const handleZoomOut = () => {
+    const newScale = Math.max(scale - 0.1, 0.5);
+    setScale(newScale);
+  };
+
+  const handleZoomIn = () => {
+    const newScale = Math.min(scale + 0.1, 3);
+    setScale(newScale);
+  };
+
   return (
     <div className="h-14 border-b border-zinc-200 bg-white px-4 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setScale((s) => Math.max(s - 0.1, 0.5))}
+          onClick={handleZoomOut}
         >
           <ZoomOut className="h-4 w-4" />
         </Button>
@@ -45,7 +55,7 @@ export const Toolbar = ({
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => setScale((s) => Math.min(s + 0.1, 3))}
+          onClick={handleZoomIn}
         >
           <ZoomIn className="h-4 w-4" />
         </Button>
