@@ -13,9 +13,15 @@ interface SidebarProps {
   pageNumber: number;
   numPages: number;
   setPageNumber: (page: number) => void;
+  onClose?: () => void;  // Added onClose as optional prop
 }
 
-export const Sidebar = ({ pageNumber, numPages, setPageNumber }: SidebarProps) => {
+export const Sidebar = ({ 
+  pageNumber, 
+  numPages, 
+  setPageNumber,
+  onClose 
+}: SidebarProps) => {
   const thumbnails = Array.from({ length: numPages }, (_, i) => i + 1);
 
   return (
@@ -30,7 +36,7 @@ export const Sidebar = ({ pageNumber, numPages, setPageNumber }: SidebarProps) =
             <BookOpen className="h-4 w-4" />
             Resumen
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-2">
+          <Button variant="ghost" className="w-full justify-start gap-2" onClick={onClose}>
             <Bookmark className="h-4 w-4" />
             Marcadores
           </Button>
@@ -53,7 +59,10 @@ export const Sidebar = ({ pageNumber, numPages, setPageNumber }: SidebarProps) =
             {thumbnails.map((page) => (
               <button
                 key={page}
-                onClick={() => setPageNumber(page)}
+                onClick={() => {
+                  setPageNumber(page);
+                  onClose?.(); // Close sidebar on mobile after selecting a page
+                }}
                 className={`w-full p-2 text-left rounded-lg transition-colors ${
                   pageNumber === page
                     ? "bg-zinc-100 text-zinc-900"
